@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proxy Link Generator</title>
+    <title>Obfuscated Proxy Link Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,16 +25,21 @@
     </style>
 </head>
 <body>
-    <h1>Proxy Link Generator</h1>
+    <h1>Obfuscated Proxy Link Generator</h1>
     <textarea id="linksInput" placeholder="Paste your links here, one per line..."></textarea>
     <br>
     <label for="proxyInput">Proxy Base URL:</label>
     <input type="text" id="proxyInput" value="http://links.owenb.me" style="width: 100%; margin-top: 10px;">
     <br><br>
-    <button onclick="generateLinks()">Generate Proxy Links</button>
+    <button onclick="generateLinks()">Generate Obfuscated Proxy Links</button>
     <div id="output"></div>
 
     <script>
+        // Function to base64 encode the URLs
+        function base64EncodeUrl(url) {
+            return btoa(url).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
+        }
+
         function generateLinks() {
             const input = document.getElementById('linksInput').value;
             const proxy = document.getElementById('proxyInput').value.trim();
@@ -44,8 +49,10 @@
             links.forEach(link => {
                 link = link.trim();
                 if (link) {
+                    // Encode the link in base64
+                    const encodedLink = base64EncodeUrl(link);
                     // Prepend the proxy base URL
-                    const proxyLink = `${proxy}/${link}`;
+                    const proxyLink = `${proxy}/${encodedLink}`;
                     output += `<a href="${proxyLink}" target="_blank">${proxyLink}</a>\n`;
                 }
             });
