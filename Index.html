@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clickable Links Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+        }
+        #output {
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+        a {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clickable Links Generator</h1>
+    <textarea id="linksInput" placeholder="Paste your links here, one per line..."></textarea>
+    <br>
+    <button onclick="generateLinks()">Generate Clickable Links</button>
+    <div id="output"></div>
+
+    <script>
+        function generateLinks() {
+            const input = document.getElementById('linksInput').value;
+            const links = input.split('\n');
+            let output = '';
+
+            links.forEach(link => {
+                link = link.trim();
+                if (link) {
+                    output += `<a href="${link}" target="_blank">${link}</a>\n`;
+                }
+            });
+
+            document.getElementById('output').innerHTML = output;
+        }
+    </script>
+</body>
+</html>
