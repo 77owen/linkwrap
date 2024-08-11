@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clickable Links Generator</title>
+    <title>Proxy Link Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,26 +20,33 @@
         a {
             display: block;
             margin-bottom: 5px;
+            word-wrap: break-word;
         }
     </style>
 </head>
 <body>
-    <h1>Clickable Links Generator</h1>
+    <h1>Proxy Link Generator</h1>
     <textarea id="linksInput" placeholder="Paste your links here, one per line..."></textarea>
     <br>
-    <button onclick="generateLinks()">Generate Clickable Links</button>
+    <label for="proxyInput">Proxy Base URL:</label>
+    <input type="text" id="proxyInput" value="http://links.owenb.me" style="width: 100%; margin-top: 10px;">
+    <br><br>
+    <button onclick="generateLinks()">Generate Proxy Links</button>
     <div id="output"></div>
 
     <script>
         function generateLinks() {
             const input = document.getElementById('linksInput').value;
+            const proxy = document.getElementById('proxyInput').value.trim();
             const links = input.split('\n');
             let output = '';
 
             links.forEach(link => {
                 link = link.trim();
                 if (link) {
-                    output += `<a href="${link}" target="_blank">${link}</a>\n`;
+                    // Prepend the proxy base URL
+                    const proxyLink = `${proxy}/${link}`;
+                    output += `<a href="${proxyLink}" target="_blank">${proxyLink}</a>\n`;
                 }
             });
 
